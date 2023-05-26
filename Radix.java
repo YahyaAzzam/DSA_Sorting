@@ -5,9 +5,9 @@ import java.util.Queue;
 public class Radix implements Sort{
 
     public int[][] sort(int[] array) {
-        int place = 1, max = array[0];
-        for (int i = 1; i < array.length; i++) {
-            max = Math.max(max, array[i]);
+        int place = 1, max = 0;
+        for (int k : array) {
+            max = Math.max(max, k);
         }
         max = (int) Math.log10(max) + 1;
         int[][] intermediate = new int[max+1][array.length];

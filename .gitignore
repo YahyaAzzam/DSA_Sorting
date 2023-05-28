@@ -1,3 +1,9 @@
 
 *.xml
 *.iml
+*.class
+out/production/DSA_Sorting/RadixSort.txt
+out/production/DSA_Sorting/MergeSort.txt
+out/production/DSA_Sorting/InsertionSort.txt
+out/production/DSA_Sorting/HeapSort.txt
+out/production/DSA_Sorting/.gitattributes

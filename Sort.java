@@ -1,5 +1,5 @@
 public interface Sort {
-    int[][] sort(int[] array);
+    int[][] sort(int[] array, boolean steps);
 
 
 

@@ -4,7 +4,7 @@ import java.util.Queue;
 
 public class Radix implements Sort{
 
-    public int[][] sort(int[] array) {
+    public int[][] sort(int[] array, boolean steps) {
         int place = 1, max = 0, n = 0;
         for (int k : array) {
             max = Math.max(max, Math.abs(k));
@@ -17,8 +17,11 @@ public class Radix implements Sort{
             if (k < 0) negative[a++] = k;
             else positive[b++] = k;
         }
-        int[][] intermediate = new int[max+1][array.length];
-        intermediate[0] = array.clone();
+        int[][] intermediate;
+        if (steps) {
+            intermediate = new int[max+1][array.length];
+            intermediate[0] = array.clone();
+        } else intermediate = new int[1][array.length];
         ArrayList<Queue<Integer>> buckets = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             buckets.add(new LinkedList<>());
@@ -42,14 +45,17 @@ public class Radix implements Sort{
                     negative[next++] = buckets.get(j).remove();
                 }
             }
-            for (int k : negative) {
-                intermediate[place][--next] = k;
+            if (steps) {
+                for (int k : negative) {
+                    intermediate[place][--next] = k;
+                }
+                System.arraycopy(positive, 0, intermediate[place], n, positive.length);
+                place++;
             }
-            System.arraycopy(positive, 0, intermediate[place], n, positive.length);
-            place++;
         }
         System.arraycopy(negative, 0, array, 0, n);
         System.arraycopy(positive, 0, array, n, positive.length);
+        if (!steps) intermediate[0] = array.clone();
         return intermediate;
     }
 }

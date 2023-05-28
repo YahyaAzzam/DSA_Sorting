@@ -20,7 +20,7 @@ public void initialize(String path) throws IOException, InterruptedException{
 public T Simple_Sort(boolean opt){
 
 sorter=new Insertion();
-int[][] arr= sorter.sort(myarr);
+int[][] arr= sorter.sort(myarr, !opt);
 int size=arr.length;
 
 if(opt){
@@ -35,7 +35,7 @@ else{
 public T Efficient_Sort(boolean opt){
 
 sorter=new Merge();
-int[][] arr= sorter.sort(myarr);
+int[][] arr= sorter.sort(myarr, !opt);
 int size=arr.length;
 
 if(opt){
@@ -50,7 +50,7 @@ else{
 
 public T Non_Comparison_Sort(boolean opt){
     sorter=new Radix();
-    int[][] arr= sorter.sort(myarr);
+    int[][] arr= sorter.sort(myarr, !opt);
     int size=arr.length;
     
     if(opt){
@@ -63,7 +63,7 @@ public T Non_Comparison_Sort(boolean opt){
 
 public T HeapSort(boolean opt){
     sorter=new Heap();
-    int[][] arr= sorter.sort(myarr);
+    int[][] arr= sorter.sort(myarr, !opt);
     int size=arr.length;
     if(opt){
         return (T) arr[size-1];

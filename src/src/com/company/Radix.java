@@ -1,3 +1,5 @@
+package com.company;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -5,7 +7,7 @@ import java.util.Queue;
 public class Radix implements Sort{
 
     public int[][] sort(int[] array, boolean steps) {
-        int place = 1, max = 0, n = 0;
+        int place = 1, max = 0, n = 0,next=0;
         for (int k : array) {
             max = Math.max(max, Math.abs(k));
             if (k < 0) n++;
@@ -27,7 +29,7 @@ public class Radix implements Sort{
             buckets.add(new LinkedList<>());
         }
         for (int i = 0; i < max; i++) {
-            int next = 0;
+             next = 0;
             for (int j : positive) {
                 buckets.get((j / (int) Math.pow(10, i)) % 10).add(j);
             }
@@ -53,7 +55,10 @@ public class Radix implements Sort{
                 place++;
             }
         }
-        System.arraycopy(negative, 0, array, 0, n);
+        next=n;
+        for (int k : negative) {
+            array[--next] = k;
+        }
         System.arraycopy(positive, 0, array, n, positive.length);
         if (!steps) intermediate[0] = array.clone();
         return intermediate;

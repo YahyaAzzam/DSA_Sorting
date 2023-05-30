@@ -7,7 +7,11 @@ public class Heap implements Sort {
     public int[][] sort(int[] array, boolean steps) {
         int[][] intermediate;
         if (steps) {
-            intermediate = new int[array.length * array.length][array.length];
+            double x = Math.log(array.length)/Math.log(2);
+            int y = (int) Math.pow(2, (int) x), z = (int) Math.ceil(x) - 1, l = (z + 1) * (array.length - (int) Math.pow(2, z));
+            y += (array.length - y)/2 + 1;
+            for (int i = 0; i < z; i++) l += (i + 1) * (int) Math.pow(2, i);
+            intermediate = new int[y + l][array.length];
             intermediate[0] = array.clone();
         } else intermediate = new int[1][array.length];
         int place = 1;

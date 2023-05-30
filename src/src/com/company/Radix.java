@@ -1,13 +1,14 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class Radix implements Sort{
 
     public int[][] sort(int[] array, boolean steps) {
-        int place = 1, max = 0, n = 0,next=0;
+        int place = 1, max = 0, n = 0,next, using;
         for (int k : array) {
             max = Math.max(max, Math.abs(k));
             if (k < 0) n++;
@@ -24,27 +25,32 @@ public class Radix implements Sort{
             intermediate = new int[max+1][array.length];
             intermediate[0] = array.clone();
         } else intermediate = new int[1][array.length];
-        ArrayList<Queue<Integer>> buckets = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            buckets.add(new LinkedList<>());
-        }
+        int[][] buckets = new int[10][array.length];
+        int[] pop = new int[10];
+
         for (int i = 0; i < max; i++) {
-             next = 0;
             for (int j : positive) {
-                buckets.get((j / (int) Math.pow(10, i)) % 10).add(j);
-            }
-            for (int j = 0; j < 10; j++) {
-                while (!buckets.get(j).isEmpty()) {
-                    positive[next++] = buckets.get(j).remove();
-                }
+                next = (j / (int) Math.pow(10, i)) % 10;
+                buckets[next][pop[next]++] = j;
             }
             next = 0;
-            for (int j : negative) {
-                buckets.get(((-j) / (int) Math.pow(10, i)) % 10).add(j);
-            }
             for (int j = 0; j < 10; j++) {
-                while (!buckets.get(j).isEmpty()) {
-                    negative[next++] = buckets.get(j).remove();
+                using = 0;
+                while (pop[j] != 0) {
+                    positive[next++] = buckets[j][using++];
+                    pop[j]--;
+                }
+            }
+            for (int j : negative) {
+                next = ((-j) / (int) Math.pow(10, i)) % 10;
+                buckets[next][pop[next]++] = j;
+            }
+            next = 0;
+            for (int j = 0; j < 10; j++) {
+                using = 0;
+                while (pop[j] != 0) {
+                    negative[next++] = buckets[j][using++];
+                    pop[j]--;
                 }
             }
             if (steps) {
